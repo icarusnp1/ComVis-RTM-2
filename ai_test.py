@@ -6,7 +6,7 @@ from scipy import ndimage as ndi
 # -----------------------------
 # 1️⃣ Load dan Preprocessing
 # -----------------------------
-img = cv.imread('botol_berjajar_berdempetan_povatas2.png')
+img = cv.imread('botol_berjajar_berdempetan8.png')
 img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
@@ -27,11 +27,11 @@ sure_bg = cv.dilate(opening, kernel, iterations=3)
 # 3️⃣ Distance Transform (untuk area inti objek)
 # -----------------------------
 dist_transform = cv.distanceTransform(opening, cv.DIST_L2, 5)
-# _, sure_fg = cv.threshold(dist_transform, 0.9 * dist_transform.max(), 255, 0)
+_, sure_fg = cv.threshold(dist_transform, 0.6 * dist_transform.max(), 255, 0)
 # _, sure_fg = cv.threshold(dist_transform, 75, 255, 0)
 
-# sure_fg = np.uint8(sure_fg)
-# unknown = cv.subtract(sure_bg, sure_fg)
+sure_fg = np.uint8(sure_fg)
+unknown = cv.subtract(sure_bg, sure_fg)
 
 # -----------------------------
 # 4️⃣ Marker untuk Watershed
